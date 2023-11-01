@@ -41,10 +41,15 @@ public class Seguridad {
         //Asugnar permisas a URL por Roles
                 .antMatchers(
                         "/protegido/**"
-                ).hasAnyAuthority("ROLE_ADMIN","ROLE_USER")
+                ).hasAnyAuthority("ROLE_ADMIN")
+                //.hasAnyAuthority("ROLE_ADMIN","ROLE_USER")
+
         //Configuraciones genrales
                 .anyRequest().authenticated()
-                .and().formLogin().permitAll()
+                //Pagina del login
+                    //.and().formLogin().permitAll() Este es el login que venia por defecto
+                .and().formLogin().loginPage("/acceso/login").permitAll()
+                //Rutra del login
                 .and().logout().permitAll()
         ;
         return http.build();
