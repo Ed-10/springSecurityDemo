@@ -1,4 +1,4 @@
-<div th:fragment="menu">
+<div th:fragment="menu" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <ul class="nav">
         <li class="nav-item">
             <a class="nav-link" th:href="@{/}">Home</a>
@@ -21,5 +21,18 @@
         <li class="nav-item">
             <a class="nav-link" th:href="@{/liberada/liberada-2}">Liberada home</a>
         </li>
+        <li class="nav-item" sec:authorize="isAuthenticated()">
+            <a class="nav-link" href="javascript:void(0)" onclick="document.logout_form.submit();">Salir</a>
+        </li>
     </ul>
+    <br>
+    <div sec:authorize="isAuthenticated()">
+        Hola
+        <span sec:authentication="name"></span>
+        c: | Roles en la BD: <span sec:authentication="principal.authorities"></span>
+
+        <form name="logout_form" th:action="@{/logout}" method="POST">
+
+        </form>
+    </div>
 </div>

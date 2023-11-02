@@ -19,7 +19,7 @@ public class AccesoController {
     {
         if (principal!=null)
         {
-            flash.addFlashAttribute("clase","succes");
+            flash.addFlashAttribute("clase","success");
             flash.addFlashAttribute("mensaje","Ya ah iniciado sesion anteriormente");
             return "redirect:/";
         }
@@ -31,8 +31,8 @@ public class AccesoController {
         }
         if (logout!=null)
         {
-            flash.addFlashAttribute("clase","succes");
-            flash.addFlashAttribute("mensaje","Se ha cerrado secion de forma exitosa");
+            flash.addFlashAttribute("clase","success");
+            flash.addFlashAttribute("mensaje","Se ha cerrado la secion de forma exitosa");
             return "redirect:/acceso/login";
         }
         return "acceso/login";
