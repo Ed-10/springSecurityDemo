@@ -1,5 +1,6 @@
 package com.example.springsecuritydemo.seguridad;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,6 +18,9 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableGlobalMethodSecurity(prePostEnabled = true)//Spring entiende que aqui se van a realizar las configuraciones de todo Security
 public class Seguridad {
     //Metodo para ajustar todo lo referente a la autentificacion
+    //Inyectando LoginPersonalizado
+    @Autowired
+    private LoginPersonalizado loginPersonalizado;
     @Bean
     public AuthenticationManager autenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
@@ -35,7 +39,7 @@ public class Seguridad {
         .antMatchers(
                 "/",
                 "/liberada/**",
-                "acceso/registro"
+                "/acceso/registro"
         )
                 .permitAll()
         //Asugnar permisas a URL por Roles
@@ -48,7 +52,9 @@ public class Seguridad {
                 .anyRequest().authenticated()
                 //Pagina del login
                     //.and().formLogin().permitAll() Este es el login que venia por defecto
-                .and().formLogin().loginPage("/acceso/login").permitAll()
+                    //.and().formLogin().loginPage("/acceso/login").permitAll()
+                .and().formLogin().successHandler(loginPersonalizado).loginPage("/acceso/login").permitAll()
+
                 //Rutra del login
                 .and().logout().permitAll()
         ;
